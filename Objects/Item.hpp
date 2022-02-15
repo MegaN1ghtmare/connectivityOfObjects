@@ -20,21 +20,25 @@ class Item: public IItem {
         Item(const std::string& iName, int iQuant, int iPrice);
         virtual ~Item();
 
-        virtual const std::string& getItemName() const;
-        virtual int getItemQuantity() const;
-        virtual int getItemPrice() const;
-        virtual Category* getCategory() const;
-        virtual Category& getCategoryRef() const;
-        virtual const std::string& getItemsCategoryName() const;
+        const std::string& getItemName() const;
+        int getItemQuantity() const;
+        int getItemPrice() const;
+        Category* getCategory() const;
+        Category& getCategoryRef() const;
+        const std::string& getItemsCategoryName() const;
 
         virtual void changeItemName(std::string& newItemName);
         virtual void setItemQuantity(int newQuantity);
         virtual void setItemPrice(int newPrice);
+        virtual void changeItemCategory(Category& newCategory);
+        virtual void deleteThisItem();
 
         virtual void addItemToOrder(Order& order);
         virtual void removeItemFromOrder(Order& order);
 
         virtual std::map<std::string, Order*>& getListOfORders() const;
 };
+
+std::ostream& operator<<(std::ostream& out, const Item& item);
 
 #endif //ITEM_HPP

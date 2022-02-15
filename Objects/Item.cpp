@@ -4,11 +4,13 @@ Item::Item(const std::string& iName, int iQuant, int iPrice) {
     this->itemName = iName;
     this->itemQuantity = iQuant;
     this->itemPrice = iPrice;
-    this->currentCategory = ;
+    this->currentCategory = *this;
 }
 
 Item::~Item() {
-
+    delete(this->itemName);
+    delete(this->itemQuantity);
+    delete(this->itemPrice);
 }
 
 const std::string& Item::getItemName() const {
@@ -47,7 +49,31 @@ void Item::setItemPrice(int newPrice) {
     this->itemPrice = newPrice;
 }
 
-        void Item::addItemToOrder(Order& order);
-        void Item::removeItemFromOrder(Order& order);
+void Item::changeItemCategory(Category& newCategory) {
+    this->currentCategory->moveItemToAnotherCategory(*this, newCategory);
+}
 
-        std::map<std::string, Order*>& Item::getListOfORders() const;
+void Item::deleteThisItem() {
+    this->currentCategory->deleteItemFromCategoty(*this);
+    ~Item();
+}
+
+void Item::addItemToOrder(Order& order) {
+
+}
+
+void Item::removeItemFromOrder(Order& order) {
+
+}
+
+std::map<std::string, Order*>& Item::getListOfORders() const {
+
+}
+
+std::ostream& operator<<(std::ostream& out, const Item& item) {
+    out << "Item name: " << item.getItemName()
+        << " price: " << item.getItemPrice() << " dollars, "
+        << "in stock: " << item.getItemQuantity() << " pcs" << std::endl;
+
+    return out;
+}

@@ -13,6 +13,7 @@ class ICategory {
 
         virtual void addItemToList(Item& item) = 0;
         virtual void createNewItem(const std::string& iName, int iQuant, int iPrice) = 0;
+        virtual void deleteItemFromCategoty(Item& item) = 0;
         virtual void moveItemToAnotherCategory(Item& item, Categoty& newCategory) = 0;
         virtual void clearList() = 0;
 

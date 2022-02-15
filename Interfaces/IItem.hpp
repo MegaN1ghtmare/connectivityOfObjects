@@ -11,6 +11,11 @@ class IItem {
         IItem();
         virtual ~IItem();
 
+        virtual void changeItemName(std::string& newItemName) = 0;
+        virtual void setItemQuantity(int newQuantity) = 0;
+        virtual void setItemPrice(int newPrice) = 0;
+        virtual void deleteThisItem() = 0;
+
         virtual void addItemToOrder(Order& order) = 0;
         virtual void removeItemFromOrder(Order& order) = 0;
 
