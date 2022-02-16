@@ -1,6 +1,7 @@
 #ifndef CATEGORY_HPP
 #define CATEGORY_HPP
 
+#include <iostream>
 #include <string>
 #include <map>
 
@@ -26,8 +27,8 @@ class Category: public ICategory {
 
         virtual void addItemToList(Item& item);
         virtual void createNewItem(const std::string& iName, int iQuant, int iPrice);
-        virtual void deleteItemFromCategoty(Item& item);
-        virtual void moveItemToAnotherCategory(Item& item, Categoty& newCategory);
+        virtual void deleteItemFromCategory(Item& item);
+        virtual void moveItemToAnotherCategory(Item& item, ICategory& newCategory);
         virtual void clearList();
 
         virtual std::map<std::string, Item*>& getListOfItems() const;

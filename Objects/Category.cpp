@@ -1,53 +1,52 @@
 #include "Category.hpp"
 
-Categoty::Category(const std::string& cName) {
+Category::Category(const std::string& cName) {
     this->categoryName = cName;
     this->itemList = new std::map<std::string, Item*>;
     this->itemCounter = 0;
 }
 
-Categoty::~Category() {
-    delete(this->categoryName);
-    delete(this->itemList);
+Category::~Category() {
+
 }
 
-const std::string& Categoty::getCategoryName() const {
+const std::string& Category::getCategoryName() const {
     return this->categoryName;
 }
 
-int Categoty::getItemCounter() const {
+int Category::getItemCounter() const {
     return this->itemCounter;
 }
 
-void Categoty::increaseItemCounter() {
+void Category::increaseItemCounter() {
     this->itemCounter += 1;
 }
 
-void Categoty::decreaseItemCounter() {
+void Category::decreaseItemCounter() {
     this->itemCounter -= 1;
 }
 
-void Categoty::addItemToList(Item& item) {
+void Category::addItemToList(Item& item) {
     this->itemList->insert(std::pair<std::string, Item*>(item.getItemName(), &item));
     increaseItemCounter();
 }
 
-void Categoty::createNewItem(const std::string& iName, int iQuant, int iPrice) {
-    Item item(iName, iQuant, iPrice);
-    addItemToList(item);
+void Category::createNewItem(const std::string& iName, int iQuant, int iPrice) {
+    Item* item = new Item(iName, iQuant, iPrice, this);
+    addItemToList(*item);
 }
 
-void Item::deleteItemFromCategoty(Item& item) {
+void Category::deleteItemFromCategory(Item& item) {
     this->itemList->erase(item.getItemName());
     decreaseItemCounter();
 }
 
-void Categoty::moveItemToAnotherCategory(Item& item, Categoty& newCategory) {
-    deleteItemFromCategoty(item);
+void Category::moveItemToAnotherCategory(Item& item, ICategory& newCategory) {
+    deleteItemFromCategory(item);
     newCategory.addItemToList(item);
 }
 
-void Categoty::clearList() {
+void Category::clearList() {
     for ( auto it = itemList->begin(); it != itemList->end(); it++ ) {
         Item* item = it->second;
 
@@ -55,7 +54,7 @@ void Categoty::clearList() {
     }
 }
 
-std::map<std::string, Item*>& Categoty::getListOfItems() const {
+std::map<std::string, Item*>& Category::getListOfItems() const {
     return *itemList;
 }
 
@@ -64,7 +63,7 @@ std::ostream& operator<<(std::ostream& out, const std::map<First, Second>& lst) 
     typename std::map<First, Second>::const_iterator it = lst.begin();
 
     for ( int i = 1; it != lst.end(); it++, i++ ) {
-        out << i << ". " << it->second << std::endl;
+        out << i << ". " << *(it->second);
     }
 
     return out;
@@ -73,7 +72,7 @@ std::ostream& operator<<(std::ostream& out, const std::map<First, Second>& lst) 
 std::ostream& operator<<(std::ostream& out, const Category& category) {
     out << "Category name: " << category.getCategoryName()
         << " it contains " << category.getItemCounter() << " different items, "
-        << " here is the list: " << category.getListOfItems() << std::endl;
+        << " here is the list: " << std::endl << category.getListOfItems();
 
     return out;
 }

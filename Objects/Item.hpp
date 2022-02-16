@@ -1,6 +1,7 @@
 #ifndef ITEM_HPP
 #define ITEM_HPP
 
+#include <iostream>
 #include <string>
 #include <map>
 
@@ -17,7 +18,7 @@ class Item: public IItem {
         int itemPrice;
         Category* currentCategory;
     public:
-        Item(const std::string& iName, int iQuant, int iPrice);
+        Item(const std::string& iName, int iQuant, int iPrice, Category* category);
         virtual ~Item();
 
         const std::string& getItemName() const;
@@ -36,7 +37,7 @@ class Item: public IItem {
         virtual void addItemToOrder(Order& order);
         virtual void removeItemFromOrder(Order& order);
 
-        virtual std::map<std::string, Order*>& getListOfORders() const;
+        // virtual std::map<std::string, Order*>& getListOfORders() const;
 };
 
 std::ostream& operator<<(std::ostream& out, const Item& item);
