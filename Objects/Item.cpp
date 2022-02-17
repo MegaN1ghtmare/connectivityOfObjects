@@ -53,7 +53,8 @@ void Item::changeItemCategory(Category& newCategory) {
 
 void Item::deleteThisItem() {
     this->currentCategory->deleteItemFromCategory(*this);
-    delete this;
+
+    delete this; // have some quastions about how it works
 }
 
 void Item::addItemToOrder(Order& order) {
@@ -71,7 +72,7 @@ void Item::removeItemFromOrder(Order& order) {
 std::ostream& operator<<(std::ostream& out, const Item& item) {
     out << "Item name: " << item.getItemName()
         << ", price: " << item.getItemPrice() << " dollars, "
-        << "in stock: " << item.getItemQuantity() << " pcs" << std::endl;
+        << "in stock: " << item.getItemQuantity() << " pcs - " << &(item.getItemName()) << std::endl;
 
     return out;
 }

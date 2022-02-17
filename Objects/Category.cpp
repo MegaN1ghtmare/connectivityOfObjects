@@ -3,7 +3,6 @@
 Category::Category(const std::string& cName) {
     this->categoryName = cName;
     this->itemList = new std::map<std::string, Item*>;
-    this->itemCounter = 0;
 }
 
 Category::~Category() {
@@ -14,21 +13,12 @@ const std::string& Category::getCategoryName() const {
     return this->categoryName;
 }
 
-int Category::getItemCounter() const {
-    return this->itemCounter;
-}
-
-void Category::increaseItemCounter() {
-    this->itemCounter += 1;
-}
-
-void Category::decreaseItemCounter() {
-    this->itemCounter -= 1;
+int Category::getItemsNumber() const {
+    return itemList->size();
 }
 
 void Category::addItemToList(Item& item) {
     this->itemList->insert(std::pair<std::string, Item*>(item.getItemName(), &item));
-    increaseItemCounter();
 }
 
 void Category::createNewItem(const std::string& iName, int iQuant, int iPrice) {
@@ -38,7 +28,6 @@ void Category::createNewItem(const std::string& iName, int iQuant, int iPrice) {
 
 void Category::deleteItemFromCategory(Item& item) {
     this->itemList->erase(item.getItemName());
-    decreaseItemCounter();
 }
 
 void Category::moveItemToAnotherCategory(Item& item, ICategory& newCategory) {
@@ -47,8 +36,8 @@ void Category::moveItemToAnotherCategory(Item& item, ICategory& newCategory) {
 }
 
 void Category::clearList() {
-    for ( auto it = itemList->begin(); it != itemList->end(); it++ ) {
-        Item* item = it->second;
+    for ( auto rit = itemList->rbegin(); rit != itemList->rend(); ) {
+        Item* item = rit->second;
 
         item->deleteThisItem();
     }
@@ -71,7 +60,7 @@ std::ostream& operator<<(std::ostream& out, const std::map<First, Second>& lst) 
 
 std::ostream& operator<<(std::ostream& out, const Category& category) {
     out << "Category name: " << category.getCategoryName()
-        << " it contains " << category.getItemCounter() << " different items, "
+        << " it contains " << category.getItemsNumber() << " different items, "
         << " here is the list: " << std::endl << category.getListOfItems();
 
     return out;

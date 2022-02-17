@@ -1,4 +1,3 @@
-// #include "Interfaces/*.hpp"
 #include "Objects/Category.hpp"
 #include "Objects/Item.hpp"
 
@@ -15,8 +14,9 @@ int main() {
     std::cout << "Mobilephones items created:" << std::endl;
     std::cout << category << std::endl;
 
-    Item ittem("Samsung S9+", 1, 300, &category);
-    std::cout << ittem << std::endl;
-    category.addItemToList(ittem);
+    Item* ittem = new Item("Samsung S9+", 1, 300, &category);
+    std::cout << *ittem << std::endl;
+    category.addItemToList(*ittem);
     std::cout << category << std::endl;
+    category.clearList();
 }
